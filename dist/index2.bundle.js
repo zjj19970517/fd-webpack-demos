@@ -2032,18 +2032,20 @@ module.exports = function isAxiosError(payload) {
 
 
 /***/ }),
-/* 30 */
+/* 30 */,
+/* 31 */,
+/* 32 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ addA)
+/* harmony export */   "default": () => (/* binding */ addB)
 /* harmony export */ });
-const a = 10;
+const b = 10;
 
-function addA() {
-  return a += 10;
+function addB() {
+  return b += 10;
 }
 
 /***/ })
@@ -2122,11 +2124,11 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _modules_a__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(30);
+/* harmony import */ var _modules_b__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(32);
 
 
 
-console.log("hello world!1", (0,_modules_a__WEBPACK_IMPORTED_MODULE_1__["default"])());
+console.log("hello world!2", (0,_modules_b__WEBPACK_IMPORTED_MODULE_1__["default"])());
 })();
 
 /******/ })()
