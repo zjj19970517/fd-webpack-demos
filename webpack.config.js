@@ -1,11 +1,9 @@
-const webpack = require('webpack');
 const path = require('path');
 
 const config = {
-  entry: './src/index.js',
+  entry: ['./src/index1.js', './src/index2.js'],
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   }
 };
 
