@@ -1,1 +1,1 @@
-console.log("hello world!");
+require('./main.css');
