@@ -16,7 +16,7 @@ module.exports = __webpack_require__(2);
 var utils = __webpack_require__(3);
 var bind = __webpack_require__(4);
 var Axios = __webpack_require__(5);
-var mergeConfig = __webpack_require__(24);
+var mergeConfig = __webpack_require__(25);
 var defaults = __webpack_require__(10);
 
 /**
@@ -50,19 +50,19 @@ var axios = createInstance(defaults);
 axios.Axios = Axios;
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(22);
-axios.CancelToken = __webpack_require__(27);
-axios.isCancel = __webpack_require__(23);
-axios.VERSION = (__webpack_require__(26).version);
+axios.Cancel = __webpack_require__(23);
+axios.CancelToken = __webpack_require__(28);
+axios.isCancel = __webpack_require__(24);
+axios.VERSION = (__webpack_require__(27).version);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(28);
+axios.spread = __webpack_require__(29);
 
 // Expose isAxiosError
-axios.isAxiosError = __webpack_require__(29);
+axios.isAxiosError = __webpack_require__(30);
 
 module.exports = axios;
 
@@ -455,8 +455,8 @@ var utils = __webpack_require__(3);
 var buildURL = __webpack_require__(6);
 var InterceptorManager = __webpack_require__(7);
 var dispatchRequest = __webpack_require__(8);
-var mergeConfig = __webpack_require__(24);
-var validator = __webpack_require__(25);
+var mergeConfig = __webpack_require__(25);
+var validator = __webpack_require__(26);
 
 var validators = validator.validators;
 /**
@@ -746,9 +746,9 @@ module.exports = InterceptorManager;
 
 var utils = __webpack_require__(3);
 var transformData = __webpack_require__(9);
-var isCancel = __webpack_require__(23);
+var isCancel = __webpack_require__(24);
 var defaults = __webpack_require__(10);
-var Cancel = __webpack_require__(22);
+var Cancel = __webpack_require__(23);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -870,6 +870,7 @@ module.exports = function transformData(data, headers, fns) {
 var utils = __webpack_require__(3);
 var normalizeHeaderName = __webpack_require__(11);
 var enhanceError = __webpack_require__(12);
+var transitionalDefaults = __webpack_require__(13);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -885,10 +886,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(13);
+    adapter = __webpack_require__(14);
   } else if (typeof process !== 'undefined' && Object.prototype.toString.call(process) === '[object process]') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(13);
+    adapter = __webpack_require__(14);
   }
   return adapter;
 }
@@ -910,11 +911,7 @@ function stringifySafely(rawValue, parser, encoder) {
 
 var defaults = {
 
-  transitional: {
-    silentJSONParsing: true,
-    forcedJSONParsing: true,
-    clarifyTimeoutError: false
-  },
+  transitional: transitionalDefaults,
 
   adapter: getDefaultAdapter(),
 
@@ -1072,21 +1069,35 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 /***/ }),
 /* 13 */
+/***/ ((module) => {
+
+"use strict";
+
+
+module.exports = {
+  silentJSONParsing: true,
+  forcedJSONParsing: true,
+  clarifyTimeoutError: false
+};
+
+
+/***/ }),
+/* 14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 var utils = __webpack_require__(3);
-var settle = __webpack_require__(14);
-var cookies = __webpack_require__(16);
+var settle = __webpack_require__(15);
+var cookies = __webpack_require__(17);
 var buildURL = __webpack_require__(6);
-var buildFullPath = __webpack_require__(17);
-var parseHeaders = __webpack_require__(20);
-var isURLSameOrigin = __webpack_require__(21);
-var createError = __webpack_require__(15);
-var defaults = __webpack_require__(10);
-var Cancel = __webpack_require__(22);
+var buildFullPath = __webpack_require__(18);
+var parseHeaders = __webpack_require__(21);
+var isURLSameOrigin = __webpack_require__(22);
+var createError = __webpack_require__(16);
+var transitionalDefaults = __webpack_require__(13);
+var Cancel = __webpack_require__(23);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -1200,7 +1211,7 @@ module.exports = function xhrAdapter(config) {
     // Handle timeout
     request.ontimeout = function handleTimeout() {
       var timeoutErrorMessage = config.timeout ? 'timeout of ' + config.timeout + 'ms exceeded' : 'timeout exceeded';
-      var transitional = config.transitional || defaults.transitional;
+      var transitional = config.transitional || transitionalDefaults;
       if (config.timeoutErrorMessage) {
         timeoutErrorMessage = config.timeoutErrorMessage;
       }
@@ -1290,13 +1301,13 @@ module.exports = function xhrAdapter(config) {
 
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
-var createError = __webpack_require__(15);
+var createError = __webpack_require__(16);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -1322,7 +1333,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1347,7 +1358,7 @@ module.exports = function createError(message, config, code, request, response) 
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1407,14 +1418,14 @@ module.exports = (
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
-var isAbsoluteURL = __webpack_require__(18);
-var combineURLs = __webpack_require__(19);
+var isAbsoluteURL = __webpack_require__(19);
+var combineURLs = __webpack_require__(20);
 
 /**
  * Creates a new URL by combining the baseURL with the requestedURL,
@@ -1434,7 +1445,7 @@ module.exports = function buildFullPath(baseURL, requestedURL) {
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ ((module) => {
 
 "use strict";
@@ -1455,7 +1466,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ ((module) => {
 
 "use strict";
@@ -1476,7 +1487,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1536,7 +1547,7 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1611,7 +1622,7 @@ module.exports = (
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ ((module) => {
 
 "use strict";
@@ -1637,7 +1648,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ ((module) => {
 
 "use strict";
@@ -1649,7 +1660,7 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -1755,13 +1766,13 @@ module.exports = function mergeConfig(config1, config2) {
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
-var VERSION = (__webpack_require__(26).version);
+var VERSION = (__webpack_require__(27).version);
 
 var validators = {};
 
@@ -1844,21 +1855,21 @@ module.exports = {
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ ((module) => {
 
 module.exports = {
-  "version": "0.26.0"
+  "version": "0.26.1"
 };
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
-var Cancel = __webpack_require__(22);
+var Cancel = __webpack_require__(23);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -1978,7 +1989,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ ((module) => {
 
 "use strict";
@@ -2012,7 +2023,7 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -2032,9 +2043,7 @@ module.exports = function isAxiosError(payload) {
 
 
 /***/ }),
-/* 30 */,
-/* 31 */,
-/* 32 */
+/* 31 */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -2045,7 +2054,7 @@ __webpack_require__.r(__webpack_exports__);
 const b = 10;
 
 function addB() {
-  return b += 10;
+  return b + 10;
 }
 
 /***/ })
@@ -2124,9 +2133,12 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _modules_b__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(32);
+/* harmony import */ var _modules_b__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(31);
 
 
+
+
+axios__WEBPACK_IMPORTED_MODULE_0___default()('http://www.baidu.com')
 
 console.log("hello world!2", (0,_modules_b__WEBPACK_IMPORTED_MODULE_1__["default"])());
 })();
