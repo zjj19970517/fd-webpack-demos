@@ -1,0 +1,18 @@
+@import './b.css';
+
+@base: #f938ab;
+
+.box-shadow(@style, @c) when (iscolor(@c)) {
+  -webkit-box-shadow: @style @c;
+  box-shadow:         @style @c;
+}
+
+.a {
+  font-size: 16px;
+  background: url(./image.png) no-repeat;
+
+  span {
+    color: pink;
+  }
+}
+
